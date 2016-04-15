@@ -110,7 +110,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
 
 						cordova.getActivity().runOnUiThread(new Runnable() {
 							public void run() {
-								Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "4", Toast.LENGTH_SHORT);
+								Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "10", Toast.LENGTH_SHORT);
 								toast.show();
 							}
 						});
@@ -142,16 +142,60 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
 
     private Boolean isPrinterReady(Connection connection) throws ConnectionException, ZebraPrinterLanguageUnknownException {
         Boolean isOK = false;
+		
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "4", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
         connection.open();
+		
+		
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "5", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
+		
+		
         // Creates a ZebraPrinter object to use Zebra specific functionality like getCurrentStatus()
         ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
+		
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "6", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
 		
 		//PrinterStatus printerStatus = printer.getCurrentStatus();
 		
 		ZebraPrinterLinkOs linkOsPrinter = ZebraPrinterFactory.createLinkOsPrinter(printer);
+		
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "7", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
+		
 		PrinterStatus printerStatus = (linkOsPrinter != null) ? linkOsPrinter.getCurrentStatus() : printer.getCurrentStatus();
 
-        if (printerStatus.isReadyToPrint) {
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "8", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
+		if (printerStatus == null) {
+			throw new ConnectionException("Cannot print because the printer is null");
+		} else if (printerStatus.isReadyToPrint) {
             isOK = true;
         } else if (printerStatus.isPaused) {
             throw new ConnectionException("Cannot print because the printer is paused");
@@ -162,6 +206,14 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
         } else {
             throw new ConnectionException("Cannot print");
         }
+		
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "9", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
         return isOK;
     }
 }
