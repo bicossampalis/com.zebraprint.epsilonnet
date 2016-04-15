@@ -7,6 +7,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import android.util.Log;
+import android.widget.Toast;
 import com.zebra.android.discovery.*;
 import com.zebra.sdk.comm.*;
 import com.zebra.sdk.printer.*;
@@ -26,6 +27,14 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
             try {
                 String mac = args.getString(0);
                 String msg = args.getString(1);
+
+				cordova.getActivity().runOnUiThread(new Runnable() {
+					public void run() {
+						Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "1", Toast.LENGTH_SHORT);
+						toast.show();
+					}
+				});
+
                 sendData(callbackContext, mac, msg);
             } catch (Exception e) {
                 //Log.e(LOG_TAG, e.getMessage());
@@ -78,12 +87,34 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
             @Override
             public void run() {
                 try {
+				
+					cordova.getActivity().runOnUiThread(new Runnable() {
+						public void run() {
+							Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "2", Toast.LENGTH_SHORT);
+							toast.show();
+						}
+					});
                     // Instantiate insecure connection for given Bluetooth MAC Address.
                     Connection thePrinterConn = new BluetoothConnectionInsecure(mac);
 
+					cordova.getActivity().runOnUiThread(new Runnable() {
+						public void run() {
+							Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "3", Toast.LENGTH_SHORT);
+							toast.show();
+						}
+					});
+					
+					
                     // Verify the printer is ready to print
                     if (isPrinterReady(thePrinterConn)) {
 
+						cordova.getActivity().runOnUiThread(new Runnable() {
+							public void run() {
+								Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "4", Toast.LENGTH_SHORT);
+								toast.show();
+							}
+						});
+					
                         // Open the connection - physical connection is established here.
                         thePrinterConn.open();
 
