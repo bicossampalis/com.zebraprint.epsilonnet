@@ -28,8 +28,9 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
                 String msg = args.getString(1);
                 sendData(callbackContext, mac, msg);
             } catch (Exception e) {
-                Log.e(LOG_TAG, e.getMessage());
-                e.printStackTrace();
+                //Log.e(LOG_TAG, e.getMessage());
+                //e.printStackTrace();
+				callbackContext.error(e.getMessage());
             }
             return true;
         }
