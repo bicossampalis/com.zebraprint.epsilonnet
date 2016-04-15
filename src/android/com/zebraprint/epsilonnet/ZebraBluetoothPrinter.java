@@ -106,7 +106,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
 					
 					
                     // Verify the printer is ready to print
-                    if (isPrinterReady(thePrinterConn)) {
+                    //if (isPrinterReady(thePrinterConn)) {
 
 						cordova.getActivity().runOnUiThread(new Runnable() {
 							public void run() {
@@ -129,9 +129,9 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
                         // Close the insecure connection to release resources.
                         thePrinterConn.close();
                         callbackContext.success("Done");
-                    } else {
-						callbackContext.error("Printer is not ready");
-					}
+                    //} else {
+						//callbackContext.error("Printer is not ready");
+					//}
                 } catch (Exception e) {
                     // Handle communications error here.
                     callbackContext.error(e.getMessage());
