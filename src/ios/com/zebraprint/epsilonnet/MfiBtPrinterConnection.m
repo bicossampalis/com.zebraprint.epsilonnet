@@ -1,5 +1,8 @@
 #import <ExternalAccessory/ExternalAccessory.h>
  #import "MfiBtPrinterConnection.h"
+ 
+ @implementation MfiBtPrinterConnection
+ 
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
  
      NSString *serialNumber = @[command.arguments objectAtIndex:0];
@@ -27,3 +30,5 @@
      
      [thePrinterConn release];
  }
+ 
+ @end
