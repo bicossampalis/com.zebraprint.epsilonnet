@@ -1,15 +1,3 @@
-/**********************************************
- * CONFIDENTIAL AND PROPRIETARY
- *  
- * The information contained herein is the confidential and the exclusive property of
- * ZIH Corp. This document, and the information contained herein, shall not be copied, reproduced, published,
- * displayed or distributed, in whole or in part, in any medium, by any means, for any purpose without the express
- * written consent of ZIH Corp. 
- * 
- * Copyright ZIH Corp. 2014 
- * 
- * ALL RIGHTS RESERVED
- ***********************************************/
 
 #import <Foundation/Foundation.h>
 #import <ExternalAccessory/ExternalAccessory.h>
@@ -174,5 +162,9 @@
  * @param aTimeInMs Time in milliseconds to wait between reads.
  */
 -(void)setTimeToWaitAfterReadInMilliseconds:(NSInteger)aTimeInMs;
+
+
+-(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
+
 
 @end
