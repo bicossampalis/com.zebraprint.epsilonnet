@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.zebraprint.epsilonnet"
-    version="2.2">
+    version="2.3">
 
     <name>ZebraBluetoothPrinter</name>
 	<description>A Cordova/Phonegap driver for Zebra bluetooth printers</description>
@@ -10,13 +10,16 @@
         <engine name="cordova" version=">=3.0.0" />
     </engines>    
 
-    <js-module src="www/zbtprinter.js" name="ZebraBluetoothPrinter">
-        <clobbers target="cordova.plugins.zbtprinter" />
-    </js-module>
+    
 
     <!-- android -->
     <platform name="android">
 
+		<js-module src="www/zbtprinter.js" name="ZebraBluetoothPrinter">
+			<clobbers target="cordova.plugins.zbtprinter" />
+		</js-module>
+	
+	
       <config-file target="AndroidManifest.xml" parent="/*">
          <uses-permission android:name="android.permission.BLUETOOTH" />
       </config-file>
