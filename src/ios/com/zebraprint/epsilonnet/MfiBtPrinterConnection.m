@@ -5,7 +5,7 @@
  
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
  
-     NSString *serialNumber = @[command.arguments objectAtIndex:0];
+     NSString *serialNumber = [command.arguments objectAtIndex:0];
      
      // Instantiate connection to Zebra Bluetooth accessory
      id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
@@ -14,7 +14,7 @@
      BOOL success = [thePrinterConn open];
      
      // This example prints "This is a ZPL test." near the top of the label.
-     NSString *zplData = @[command.arguments objectAtIndex:1];
+     NSString *zplData = [command.arguments objectAtIndex:1];
      
      NSError *error = nil;
      // Send the data to printer as a byte array.
@@ -23,12 +23,12 @@
      if (success != YES || error != nil) {
          UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
          [errorAlert show];
-         [errorAlert release];
+         //[errorAlert release];
      }
      // Close the connection to release resources.
      [thePrinterConn close];
      
-     [thePrinterConn release];
+     //[thePrinterConn release];
  }
  
  @end
