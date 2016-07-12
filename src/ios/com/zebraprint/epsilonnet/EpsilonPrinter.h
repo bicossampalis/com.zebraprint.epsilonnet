@@ -1,6 +1,6 @@
 
 #import <Cordova/CDVPlugin.h>
-#import "MfiBtPrinterConnection.h"
+
 
 
 @interface EpsilonPrinter : CDVPlugin
