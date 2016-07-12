@@ -1,7 +1,7 @@
 #import <ExternalAccessory/ExternalAccessory.h>
  #import "EpsilonPrinter.h"
  
- 
+  @implementation EpsilonPrinter
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
  
      NSString *serialNumber = @"";
@@ -39,3 +39,4 @@
      //[thePrinterConn release];
  }
  
+ @end
