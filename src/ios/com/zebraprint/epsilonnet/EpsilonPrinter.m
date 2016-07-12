@@ -1,5 +1,6 @@
 #import <ExternalAccessory/ExternalAccessory.h>
  #import "EpsilonPrinter.h"
+  #import "MfiBtPrinterConnection.h"
  
  @implementation EpsilonPrinter
  
