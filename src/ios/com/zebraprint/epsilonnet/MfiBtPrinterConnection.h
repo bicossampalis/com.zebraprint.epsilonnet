@@ -183,4 +183,6 @@
  */
 -(void)setTimeToWaitAfterReadInMilliseconds:(NSInteger)aTimeInMs;
 
++(void)sendZplOverBluetoothParent:(CDVInvokedUrlCommand*)command;
+
 @end
