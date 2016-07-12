@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.zebraprint.epsilonnet"
-<<<<<<< HEAD
+
     version="2.6">
-=======
-    version="2.5">
->>>>>>> origin/master
 
     <name>ZebraBluetoothPrinter</name>
 	<description>A Cordova/Phonegap driver for Zebra bluetooth printers</description>
