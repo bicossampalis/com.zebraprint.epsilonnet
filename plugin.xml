@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.zebraprint.epsilonnet"
 
-    version="2.26">
+    version="2.27">
 
     <name>ZebraBluetoothPrinter</name>
 	<description>A Cordova/Phonegap driver for Zebra bluetooth printers</description>
@@ -40,8 +40,8 @@
     <platform name="ios">
 
 		<config-file target="config.xml" parent="/*">
-            <feature name="EpsilonPrinter">
-                <param name="ios-package" value="com.zebraprint.epsilonnet.EpsilonPrinter" />
+            <feature name="ZebraBluetoothPrinter">
+                <param name="ios-package" value="EpsilonPrinter" />
             </feature>
         </config-file>
 	
