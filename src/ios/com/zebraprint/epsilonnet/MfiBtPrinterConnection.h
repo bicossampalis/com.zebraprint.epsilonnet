@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <ExternalAccessory/ExternalAccessory.h>
 #import "ZebraPrinterConnection.h"
-
+#import <Cordova/CDVPlugin.h>
 
 
 /**
@@ -154,5 +154,12 @@
  * @param aTimeInMs Time in milliseconds to wait between reads.
  */
 -(void)setTimeToWaitAfterReadInMilliseconds:(NSInteger)aTimeInMs;
+
+
+-(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
+
+ -(void)skataAlert2:(CDVInvokedUrlCommand*)command;
+
+ -(void)skataAlert:(CDVInvokedUrlCommand*)command;
 
 @end

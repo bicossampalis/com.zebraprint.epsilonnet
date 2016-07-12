@@ -1,15 +1,15 @@
 #import <ExternalAccessory/ExternalAccessory.h>
- #import "EpsilonPrinter.h"
+
   #import "MfiBtPrinterConnection.h"
  
- @implementation EpsilonPrinter
+ @implementation MfiBtPrinterConnection
  
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
  
      NSString *serialNumber = [command.arguments objectAtIndex:0];
      
      // Instantiate connection to Zebra Bluetooth accessory
-     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[EpsilonPrinter alloc] initWithSerialNumber:serialNumber];
+     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
      
      // Open the connection - physical connection is established here.
      BOOL success = [thePrinterConn open];
