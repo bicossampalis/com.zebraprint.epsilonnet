@@ -14,9 +14,9 @@
  
  -(void)skataAlert:(CDVInvokedUrlCommand*)command{
   NSDictionary* options = [command argumentAtIndex:0];
-  NSString *message  = @"message";
-  NSString *duration = @"1500";
-  NSString *position = @"bottom";
+  NSString *message  = options[@"message"];
+  NSString *duration = options[@"duration"];
+  NSString *position = options[@"position"];
   NSDictionary *data = options[@"data"];
   NSNumber *addPixelsY = options[@"addPixelsY"];
   NSDictionary *styling = options[@"styling"];
@@ -49,5 +49,7 @@
   pluginResult.keepCallback = [NSNumber numberWithBool:YES];
   [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
+
+
  
  @end
