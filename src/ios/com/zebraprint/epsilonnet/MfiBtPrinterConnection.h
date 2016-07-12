@@ -1,8 +1,7 @@
-
 #import <Foundation/Foundation.h>
 #import <ExternalAccessory/ExternalAccessory.h>
 #import "ZebraPrinterConnection.h"
-#import <Cordova/CDVPlugin.h>
+
 
 
 /**
@@ -14,7 +13,7 @@
  *
  * \code
  #import <ExternalAccessory/ExternalAccessory.h>
- #import "MfiBtPrinterConnection.h"
+ #import "PrinterConnection.h"
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
  
      NSString *serialNumber = @[command.arguments objectAtIndex:0];
@@ -85,17 +84,13 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         // Instantiate connection to Zebra Bluetooth accessory
         id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:@"SomeSerialNumer..."];
-
         // Open the connection - physical connection is established here.
         BOOL success = [thePrinterConn open];
-
         // This example prints "This is a ZPL test." near the top of the label.
         NSString *zplData = @"^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ";
-
         NSError *error = nil;
         // Send the data to printer as a byte array.
         success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-
         //Dispath GUI work back on to the main queue!
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success != YES || error != nil) {
@@ -104,12 +99,9 @@
             [errorAlert release];
             }
         });
-
         // Close the connection to release resources.
         [thePrinterConn close];
-
         [thePrinterConn release];
-
     });
 }
  * \endcode
@@ -162,9 +154,5 @@
  * @param aTimeInMs Time in milliseconds to wait between reads.
  */
 -(void)setTimeToWaitAfterReadInMilliseconds:(NSInteger)aTimeInMs;
-
-
--(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
-
 
 @end

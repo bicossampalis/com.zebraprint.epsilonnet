@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.zebraprint.epsilonnet"
-    version="2.4">
+    version="2.5">
 
     <name>ZebraBluetoothPrinter</name>
 	<description>A Cordova/Phonegap driver for Zebra bluetooth printers</description>
@@ -40,7 +40,7 @@
 
 		<config-file target="config.xml" parent="/*">
             <feature name="ZebraBluetoothPrinter">
-                <param name="ios-package" value="com.zebraprint.epsilonnet.MfiBtPrinterConnection" />
+                <param name="ios-package" value="com.zebraprint.epsilonnet.EpsilonPrinter" />
             </feature>
         </config-file>
 	
@@ -50,13 +50,17 @@
 		
 		<header-file src="src/ios/com/zebraprint/epsilonnet/DiscoveredPrinter.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/DiscoveredPrinterNetwork.h" />
+		
+		<header-file src="src/ios/com/zebraprint/epsilonnet/EpsilonPrinter.h" />
+		<source-file src="src/ios/com/zebraprint/epsilonnet/EpsilonPrinter.m" />
+		
 		<header-file src="src/ios/com/zebraprint/epsilonnet/FieldDescriptionData.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/FileUtil.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/FormatUtil.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/GraphicsUtil.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/MagCardReader.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/MfiBtPrinterConnection.h" />
-        <source-file src="src/ios/com/zebraprint/epsilonnet/MfiBtPrinterConnection.m" />
+        
 		<header-file src="src/ios/com/zebraprint/epsilonnet/NetworkDiscoverer.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/PrinterStatus.h" />
 		<header-file src="src/ios/com/zebraprint/epsilonnet/PrinterStatusMessages.h" />
