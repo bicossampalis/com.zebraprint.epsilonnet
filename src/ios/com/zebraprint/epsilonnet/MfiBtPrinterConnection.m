@@ -2,7 +2,7 @@
  #import "MfiBtPrinterConnection.h"
  
   @implementation MfiBtPrinterConnection
- -(void)sendZplOverBluetoothParent:(NSArray)command{
+ -(void)sendZplOverBluetoothParent:(NSArray*)command{
  
      NSString *serialNumber = [command objectAtIndex:0];
      //Find the Zebra Bluetooth Accessory
