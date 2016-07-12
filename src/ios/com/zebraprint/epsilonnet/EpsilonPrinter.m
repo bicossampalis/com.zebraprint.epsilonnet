@@ -16,7 +16,7 @@
          }
      }
      // Instantiate connection to Zebra Bluetooth accessory
-     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[EpsilonPrinter alloc] initWithSerialNumber:serialNumber];
+     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
      
      // Open the connection - physical connection is established here.
      BOOL success = [thePrinterConn open];
