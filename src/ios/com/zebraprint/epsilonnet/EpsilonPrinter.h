@@ -3,7 +3,13 @@
 
 
 
-@interface EpsilonPrinter : CDVPlugin
+@interface EpsilonPrinter : CDVPlugin{
+  
+    CDVInvokedUrlCommand* cordova_command;
+  
+}
+
+@property (nonatomic,retain) CDVInvokedUrlCommand* cordova_command;
 
 -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
 
