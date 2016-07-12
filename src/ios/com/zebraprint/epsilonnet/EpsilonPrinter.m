@@ -1,5 +1,4 @@
-#import <ExternalAccessory/ExternalAccessory.h>
- #import "EpsilonPrinter.h"
+#import "EpsilonPrinter.h"
  
   @implementation EpsilonPrinter
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
@@ -9,6 +8,15 @@
    
    
    [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
+ }
+ 
+ -(void)skataAlert:(CDVInvokedUrlCommand*)command{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection" 
+                                                message:@"You must be connected to the internet to use this app." 
+                                               delegate:nil 
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+[alert show];
  }
  
  @end
