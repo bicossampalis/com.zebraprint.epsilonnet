@@ -8,7 +8,7 @@
    NSArray *names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
    
    
-    MfiBtPrinterConnection* pickedContact = [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
+   [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
  }
  
  @end
