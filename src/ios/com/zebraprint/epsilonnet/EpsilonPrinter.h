@@ -1,16 +1,12 @@
 
 #import <Cordova/CDVPlugin.h>
- #import "MfiBtPrinterConnection.h"
+#import "MfiBtPrinterConnection.h"
 
 
-@interface PrinterConnection : CDVPlugin
-
-
+@interface EpsilonPrinter : CDVPlugin
 
 -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
 
- -(void)skataAlert2:(CDVInvokedUrlCommand*)command;
 
- -(void)skataAlert:(CDVInvokedUrlCommand*)command;
 
 @end

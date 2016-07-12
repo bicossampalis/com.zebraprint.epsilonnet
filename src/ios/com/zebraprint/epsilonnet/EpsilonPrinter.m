@@ -1,15 +1,22 @@
 #import <ExternalAccessory/ExternalAccessory.h>
-
-  #import "MfiBtPrinterConnection.h"
+ #import "EpsilonPrinter.h"
  
- @implementation MfiBtPrinterConnection
  
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
  
-     NSString *serialNumber = [command.arguments objectAtIndex:0];
-     
+     NSString *serialNumber = @"";
+     //Find the Zebra Bluetooth Accessory
+     EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
+     NSArray * connectedAccessories = [sam connectedAccessories];
+     for (EAAccessory *accessory in connectedAccessories) {
+         if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound){
+             serialNumber = accessory.serialNumber;
+             break;
+             //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
+         }
+     }
      // Instantiate connection to Zebra Bluetooth accessory
-     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
+     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[EpsilonPrinter alloc] initWithSerialNumber:serialNumber];
      
      // Open the connection - physical connection is established here.
      BOOL success = [thePrinterConn open];
@@ -24,32 +31,12 @@
      if (success != YES || error != nil) {
          UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
          [errorAlert show];
-         //[errorAlert release];
+        // [errorAlert release];
      }
      // Close the connection to release resources.
      [thePrinterConn close];
      
      //[thePrinterConn release];
  }
-
- -(void)skataAlert:(CDVInvokedUrlCommand*)command{
-  NSString *serialNumber = [command.arguments objectAtIndex:0];
-UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection" 
-                                                message:serialNumber
-                                               delegate:nil 
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-[alert show];
-
- }
-
- -(void)skataAlert2:(CDVInvokedUrlCommand*)command{
- UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection" 
-                                                message:@"You must be connected to the internet to use this app." 
-                                               delegate:nil 
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-[alert show];
-
- }
- @end
+ 
+}
