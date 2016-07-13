@@ -14,7 +14,14 @@
    NSArray *names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
    
    
-   [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
+   bool bIsError = [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
+      if (bSuccess) {
+	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+	  }else{
+	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+	  }
  }
 
  

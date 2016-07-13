@@ -2,7 +2,7 @@
  #import "MfiBtPrinterConnection.h"
  
   @implementation MfiBtPrinterConnection
- -(void)sendZplOverBluetoothParent:(NSArray*)command{
+ -(bool)sendZplOverBluetoothParent:(NSArray*)command{
  
      NSString *serialNumber = [command objectAtIndex:0];
      
@@ -18,16 +18,16 @@
      NSError *error = nil;
      // Send the data to printer as a byte array.
      success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-     
+     bool bIsError = FALSE;
      if (success != YES || error != nil) {
-         UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-         [errorAlert show];
-        // [errorAlert release];
+       bIsError = TRUE;
      }
      // Close the connection to release resources.
      [thePrinterConn close];
      
      //[thePrinterConn release];
+	 
+	  return bIsError;
  }
  
  @end
