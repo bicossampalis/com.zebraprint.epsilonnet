@@ -1,18 +1,10 @@
 #import "EpsilonPrinter.h"
-#import "MfiBtPrinterConnection.h"
+
  
   @implementation EpsilonPrinter
   @synthesize cordova_command;
   
- -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
 
- self.cordova_command = command;
-   
-   NSArray *names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
-   
-   
-   [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
- }
  
  -(void)skataAlert:(CDVInvokedUrlCommand*)command{
  
