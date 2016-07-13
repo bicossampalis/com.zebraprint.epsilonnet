@@ -37,7 +37,7 @@
   
      
      [thePrinterConn close];
-	 
+	 [thePrinterConn release];
  }
 
  
