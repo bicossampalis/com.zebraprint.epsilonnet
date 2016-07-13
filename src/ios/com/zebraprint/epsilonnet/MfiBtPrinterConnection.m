@@ -2,12 +2,12 @@
 #import "MfiBtPrinterConnection.h"
  
   @implementation MfiBtPrinterConnection
- -(bool)sendZplOverBluetoothParent:(NSArray*)command{
+ -(bool)sendZplOverBluetoothParent{
  
    
      
   
-     NSString *zplData = [command objectAtIndex:1];
+   
      
 
  
