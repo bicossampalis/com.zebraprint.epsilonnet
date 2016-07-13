@@ -7,7 +7,8 @@
  
      NSString* serialNumber = command[0];
     
-
+    id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
+ 
      
      
 	 
