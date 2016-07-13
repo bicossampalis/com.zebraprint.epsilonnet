@@ -11,7 +11,7 @@
  -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
 
 
-     NSString* serialNumber = @"";
+     NSString *serialNumber = @"";
     
 	  EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
      NSArray * connectedAccessories = [sam connectedAccessories];
@@ -34,10 +34,16 @@
      NSError* error = nil;
      
      success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-  
-     
+  if (success != YES || error != nil) {
+       CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+     }
+     else{
+	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+	 }
      [thePrinterConn close];
-	 [thePrinterConn release];
+
  }
 
  
