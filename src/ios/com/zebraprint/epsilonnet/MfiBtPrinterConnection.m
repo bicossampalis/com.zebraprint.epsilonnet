@@ -2,7 +2,7 @@
 #import "MfiBtPrinterConnection.h"
  
   @implementation MfiBtPrinterConnection
- +(bool)sendZplOverBluetoothParent{
+ +(bool)sendZplOverBluetoothParent:(NSArray*)command{
  
    
      bool bIsError = FALSE;

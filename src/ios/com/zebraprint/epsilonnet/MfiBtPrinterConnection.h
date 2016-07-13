@@ -183,6 +183,6 @@
  */
 -(void)setTimeToWaitAfterReadInMilliseconds:(NSInteger)aTimeInMs;
 
-+(bool)sendZplOverBluetoothParent;
++(bool)sendZplOverBluetoothParent:(NSArray*)command;
 
 @end

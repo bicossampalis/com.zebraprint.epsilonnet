@@ -11,10 +11,10 @@
 
 
    
-   //NSArray *names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
+   NSArray *names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
    
    
-   bool bIsError = [MfiBtPrinterConnection sendZplOverBluetoothParent];
+   bool bIsError = [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
       if (bIsError) {
 	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
