@@ -1,16 +1,8 @@
-#import "EpsilonPrinter.h"
-#import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
-#import <UIKit/UIKit.h>
-#import <Cordova/NSArray+Comparisons.h>
-#import <Cordova/NSDictionary+Extensions.h>
+#import "MfiBtPrinterConnection.h"
  
-  @implementation EpsilonPrinter
-
-  
- -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
-
-
++(NSString*)sendZplOverBluetoothParent:(NSArray*)command{
+ 
      NSString* serialNumber = @"";
     
 	  EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
@@ -29,7 +21,7 @@
      BOOL success = [thePrinterConn open];
      
      
-     NSString* zplData = [command.arguments objectAtIndex:1];
+     NSString* zplData = command[1];
      
      NSError* error = nil;
      
@@ -37,16 +29,8 @@
   
      
      [thePrinterConn close];
+     
 	 
+	  return serialNumber;
  }
-
  
- -(void)skataAlert:(CDVInvokedUrlCommand*)command{
- 
-   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-}
-
-
- 
- @end
