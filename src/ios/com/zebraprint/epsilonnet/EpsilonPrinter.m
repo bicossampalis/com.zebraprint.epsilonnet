@@ -11,23 +11,20 @@
 
 
    
-   NSArray *names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
+   NSArray* names = [NSArray arrayWithObjects: [command.arguments objectAtIndex:0],[command.arguments objectAtIndex:1], nil];
    
    
-   bool bIsError = [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
-      if (bIsError) {
-	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:command.callbackId];
+   NSString* bIsError = [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
+      
+	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:bIsError];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-	  }else{
-	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:command.callbackId];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-	  }
+	 
  }
 
  
  -(void)skataAlert:(CDVInvokedUrlCommand*)command{
  
-   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:command.callbackId];
+   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
