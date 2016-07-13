@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.zebraprint.epsilonnet"
 
-    version="2.51">
+    version="2.52">
 
     <name>ZebraBluetoothPrinter</name>
 	<description>A Cordova/Phonegap driver for Zebra bluetooth printers</description>
@@ -49,36 +49,24 @@
 			<clobbers target="cordova.plugins.zbtprinter" />
 		</js-module>
 		
-		<header-file src="src/ios/com/zebraprint/epsilonnet/DiscoveredPrinter.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/DiscoveredPrinterNetwork.h" />
-		
 		<header-file src="src/ios/com/zebraprint/epsilonnet/EpsilonPrinter.h" />
 		<source-file src="src/ios/com/zebraprint/epsilonnet/EpsilonPrinter.m" />
 		
-		<header-file src="src/ios/com/zebraprint/epsilonnet/FieldDescriptionData.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/FileUtil.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/FormatUtil.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/GraphicsUtil.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/MagCardReader.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/MfiBtPrinterConnection.h" />
+		<header-file src="src/ios/com/zebraprint/epsilonnet/MfiBtPrinterConnection.h" framework="true"/>
         <source-file src="src/ios/com/zebraprint/epsilonnet/MfiBtPrinterConnection.m" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/NetworkDiscoverer.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/PrinterStatus.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/PrinterStatusMessages.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/SGD.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/SmartCardReader.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/TcpPrinterConnection.h" />
-
-		<header-file src="src/ios/com/zebraprint/epsilonnet/ZebraErrorCode.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/ZebraPrinter.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/ZebraPrinterConnection.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/ZebraPrinterFactory.h" />
-		<header-file src="src/ios/com/zebraprint/epsilonnet/ZplPrintMode.h" />
 		
-		<source-file src="src/ios/libZSDK_API.a" />
+		<header-file src="src/ios/com/zebraprint/epsilonnet/ZebraPrinterConnection.h" framework="true"/>
+		
+		<source-file src="src/ios/com/zebraprint/epsilonnet/libZSDK_API.a" framework="true"/>
 		<framework src="Foundation.framework" />
 		<framework src="QuartzCore.framework" />
 		<framework src="ExternalAccessory.framework" />
+		
+		 <config-file target="*-Info.plist" parent="UISupportedExternalAccessoryProtocols">
+            <array>
+                <string>com.zebra.rawport</string>
+            </array>
+        </config-file>
         
     </platform>
 	
