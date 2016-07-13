@@ -15,7 +15,7 @@
    
    
    bool bIsError = [MfiBtPrinterConnection sendZplOverBluetoothParent:names];
-      if (bSuccess) {
+      if (bIsError) {
 	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	  }else{
