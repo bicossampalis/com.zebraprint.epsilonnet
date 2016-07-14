@@ -28,15 +28,15 @@
      
      BOOL success = [thePrinterConn open];
      
-     
+     NSString* zplData1 = @'! U1 setvar "device.languages" "zpl"\r\n\r\n';
      NSString* zplData = [command.arguments objectAtIndex:1];
      
      NSError* error = nil;
      
-     success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+     success = success && [thePrinterConn write:[zplData1 dataUsingEncoding:NSUTF8StringEncoding] error:&error];
   
 
-	 
+	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
 if (success != YES || error != nil) {
        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
@@ -46,6 +46,9 @@ if (success != YES || error != nil) {
 	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	 }
+	 
+	 
+	 [thePrinterConn close];
  }
 
  
@@ -55,6 +58,21 @@ if (success != YES || error != nil) {
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
-
+ -(void)findPrinter:(CDVInvokedUrlCommand*)command{
  
+  EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
+     NSArray * connectedAccessories = [sam connectedAccessories];
+    // for (EAAccessory *accessory in connectedAccessories) {
+        // if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound){
+           //  serialNumber = accessory.serialNumber;
+           //  break;
+             //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
+       //  }
+   //  }
+	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsMultipart:connectedAccessories];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+
+}
+
+
  @end
