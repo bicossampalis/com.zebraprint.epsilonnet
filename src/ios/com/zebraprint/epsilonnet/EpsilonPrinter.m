@@ -29,12 +29,16 @@
      BOOL success = [thePrinterConn open];
      
      
-     NSString* zplData =  @"^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ";
+     NSString* zplData = [command.arguments objectAtIndex:1];
      
      NSError* error = nil;
      
      success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-  if (success != YES || error != nil) {
+  
+     [thePrinterConn close];
+	 
+	 
+if (success != YES || error != nil) {
        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
@@ -42,8 +46,6 @@
 	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	 }
-     [thePrinterConn close];
-
  }
 
  
