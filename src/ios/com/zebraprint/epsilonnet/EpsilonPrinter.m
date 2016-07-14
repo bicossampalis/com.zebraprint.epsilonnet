@@ -70,7 +70,7 @@ if (success != YES || error != nil) {
         [tempArray addObject:[accessory.name capitalizedString]];
     }
 	
-          }
+          
      }
 	 
 	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:[tempArray copy]];
