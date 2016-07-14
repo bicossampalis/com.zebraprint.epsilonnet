@@ -69,7 +69,7 @@ if (success != YES || error != nil) {
              //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
        //  }
    //  }
-	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsMultipart:connectedAccessories];
+	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsMultipart:(NSArray*)connectedAccessories];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 
 }
