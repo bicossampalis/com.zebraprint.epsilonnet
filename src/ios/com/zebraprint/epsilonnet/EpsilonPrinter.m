@@ -36,7 +36,7 @@
      success = success && [thePrinterConn write:[zplData1 dataUsingEncoding:NSUTF8StringEncoding] error:&error];
   
 
-	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+	 //success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
 if (success != YES || error != nil) {
        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
@@ -66,13 +66,8 @@ if (success != YES || error != nil) {
      for (EAAccessory *accessory in connectedAccessories) {
          if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound){
 	
-
-        [tempArray addObject:[accessory.name capitalizedString]];
-		[tempArray addObject:[accessory.manufacturer capitalizedString]];
-		[tempArray addObject:[accessory.modelNumber capitalizedString]];
 		[tempArray addObject:[accessory.serialNumber capitalizedString]];
-		[tempArray addObject:[accessory.hardwareRevision capitalizedString]];
-		
+	
     }
 	
           
