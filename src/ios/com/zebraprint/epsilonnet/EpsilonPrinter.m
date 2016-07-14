@@ -29,13 +29,13 @@
      BOOL success = [thePrinterConn open];
      
      
-     NSString* zplData = @"^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ%@\r%@\n%@\";
+     NSString* zplData = @"^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ";
      
      NSError* error = nil;
      
      success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
   
-     [thePrinterConn close];
+  
 	 
 	 
 if (success != YES || error != nil) {
