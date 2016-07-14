@@ -28,7 +28,7 @@
      
      BOOL success = [thePrinterConn open];
      
-     NSString* zplData1 = @'! U1 setvar "device.languages" "zpl"\r\n\r\n';
+     NSString* zplData1 = [command.arguments objectAtIndex:2];
      NSString* zplData = [command.arguments objectAtIndex:1];
      
      NSError* error = nil;
