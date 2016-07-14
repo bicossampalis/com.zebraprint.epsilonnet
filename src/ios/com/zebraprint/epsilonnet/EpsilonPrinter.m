@@ -68,6 +68,11 @@ if (success != YES || error != nil) {
 	
 
         [tempArray addObject:[accessory.name capitalizedString]];
+		[tempArray addObject:[accessory.manufacturer capitalizedString]];
+		[tempArray addObject:[accessory.modelNumber capitalizedString]];
+		[tempArray addObject:[accessory.serialNumber capitalizedString]];
+		[tempArray addObject:[accessory.hardwareRevision capitalizedString]];
+		
     }
 	
           
