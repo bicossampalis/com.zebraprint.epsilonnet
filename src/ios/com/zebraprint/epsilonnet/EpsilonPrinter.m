@@ -48,7 +48,7 @@ if (success != YES || error != nil) {
 	 }
 	 
 	 
-	 [thePrinterConn close];
+	// [thePrinterConn close];
  }
 
  
