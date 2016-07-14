@@ -29,7 +29,7 @@
      BOOL success = [thePrinterConn open];
      
      
-     NSString* zplData = [command.arguments objectAtIndex:1];
+     NSString* zplData =  @"^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ";
      
      NSError* error = nil;
      
