@@ -62,15 +62,18 @@ if (success != YES || error != nil) {
  
   EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
      NSArray * connectedAccessories = [sam connectedAccessories];
+	  NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:connectedAccessories.count];
      for (EAAccessory *accessory in connectedAccessories) {
          if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound){
-           //  serialNumber = accessory.serialNumber;
-           //  break;
-             //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
-         }
+	
+
+        [tempArray addObject:[accessory.name capitalizedString]];
+    }
+	
+          }
      }
 	 
-	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:connectedAccessories];
+	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:[tempArray copy]];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 
 }
