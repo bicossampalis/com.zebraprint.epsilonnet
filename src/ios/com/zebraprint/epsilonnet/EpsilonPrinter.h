@@ -9,6 +9,8 @@
   
 }
 
+-(void)changeLanguage:(CDVInvokedUrlCommand*)command;
+
 -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
 
 -(void)skataAlert:(CDVInvokedUrlCommand*)command;
