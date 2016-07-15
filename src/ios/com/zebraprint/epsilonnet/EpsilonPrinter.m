@@ -42,11 +42,11 @@ EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
 	 
 	 
 if (success != YES || error != nil) {
-       CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
+       CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
      else{
-	//[self performSelector:@selector(sendZplOverBluetooth:) withObject:command afterDelay:2.0];
+	[self performSelector:@selector(sendZplOverBluetooth:) withObject:command afterDelay:2.0];
 	 }
 	 
  [thePrinterConn close];
@@ -81,11 +81,12 @@ if (success != YES || error != nil) {
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 
 if (success != YES || error != nil) {
-       CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
+ CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+      
      }
      else{
-	 CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
+	 CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	 }
 	 
