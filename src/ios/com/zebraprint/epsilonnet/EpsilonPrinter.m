@@ -37,7 +37,7 @@
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
 if (success != YES || error != nil) {
-      	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error];
+      	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription] ];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
      else{

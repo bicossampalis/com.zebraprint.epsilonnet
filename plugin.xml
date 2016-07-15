@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.zebraprint.epsilonnet"
 
-    version="2.90">
+    version="2.92">
 
     <name>ZebraBluetoothPrinter</name>
 	<description>A Cordova/Phonegap driver for Zebra bluetooth printers</description>
