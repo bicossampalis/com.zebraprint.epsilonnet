@@ -33,7 +33,7 @@
      NSError* error = nil;
      
   
-
+if(zplData != nil){
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
 if (success != YES || error != nil) {
@@ -43,6 +43,7 @@ if (success != YES || error != nil) {
      else{
 	  CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+	 }
 	 }
 	 
 	 
