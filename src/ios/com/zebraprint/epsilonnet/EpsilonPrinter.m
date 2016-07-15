@@ -32,7 +32,7 @@
      
      NSError* error = nil;
      
-  if (![zplData isEqualToString:@"connect"]){
+  if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
 if (success != YES || error != nil) {
@@ -46,8 +46,8 @@ if (success != YES || error != nil) {
 	 }
 	 
 	 
-	 
-	 //[thePrinterConn close];
+	  if ([zplData isEqualToString:@"close"])
+	 [thePrinterConn close];
  }
 
  
