@@ -8,47 +8,26 @@
   @implementation EpsilonPrinter
 
   
- -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
+ -(void)changeLanguage:(CDVInvokedUrlCommand*)command{
 
 
-     NSString *serialNumber =[command.arguments objectAtIndex:0];
-    
-	
-	
-	
-	
+     NSString *serialNumber = [command.arguments objectAtIndex:0];
+
 	EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
      NSArray * connectedAccessories = [sam connectedAccessories];
-     for (EAAccessory *accessory in connectedAccessories) {
-         if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound){
-             serialNumber = accessory.serialNumber;
-             break;
-             //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
-         }
-     }
-	
-	
-	
-	
-	
-	
-	
-	
+
      id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
      
      
      BOOL success = [thePrinterConn open];
      
-     NSString* zplData1 = [command.arguments objectAtIndex:2];
-     NSString* zplData = [command.arguments objectAtIndex:1];
+
+     NSString* zplData = [command.arguments objectAtIndex:2];
      
      NSError* error = nil;
      
-     success = success && [thePrinterConn write:[zplData1 dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-  
-     [thePrinterConn close];
- 
-     success = [thePrinterConn open];
+
+
 	 
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
@@ -60,13 +39,42 @@ if (success != YES || error != nil) {
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
      else{
+	[self performSelector:@selector(sendZplOverBluetooth:) withObject:command afterDelay:2.0];
+	 }
+	 
+ [thePrinterConn close];
+ }
+
+-(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command{
+     NSString *serialNumber = [command.arguments objectAtIndex:0];
+	EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
+     NSArray * connectedAccessories = [sam connectedAccessories];
+
+     id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
+     
+     
+     BOOL success = [thePrinterConn open];
+     
+
+     NSString* zplData = [command.arguments objectAtIndex:1];
+     
+     NSError* error = nil;
+     
+
+
+	 
+	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+
+if (success != YES || error != nil) {
+       CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+     }
+     else{
 	 CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	 }
 	 
-
  }
-
  
  -(void)skataAlert:(CDVInvokedUrlCommand*)command{
  
