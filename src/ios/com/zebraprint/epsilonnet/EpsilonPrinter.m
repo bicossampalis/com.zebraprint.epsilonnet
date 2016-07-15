@@ -39,7 +39,7 @@ if (success != YES || error != nil) {
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
      else{
-	[self performSelector:@selector(sendZplOverBluetooth:) withObject:command afterDelay:2.0];
+	//[self performSelector:@selector(sendZplOverBluetooth:) withObject:command afterDelay:2.0];
 	 }
 	 
  [thePrinterConn close];
