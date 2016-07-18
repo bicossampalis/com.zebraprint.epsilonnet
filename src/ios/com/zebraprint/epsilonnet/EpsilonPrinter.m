@@ -12,12 +12,13 @@
 
 
      NSString *serialNumber = @"";
-    
+    NSString *serialNumberPda = [[command.arguments objectAtIndex:0] capitalizedString];
+	
 	  EAAccessoryManager *sam = [EAAccessoryManager sharedAccessoryManager];
      NSArray * connectedAccessories = [sam connectedAccessories];
      for (EAAccessory *accessory in connectedAccessories) {
-	 NSString *serialNumberTmp = accessory.serialNumber;
-         if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound && [serialNumberTmp isEqualToString:[command.arguments objectAtIndex:0]]){
+	 NSString *serialNumberTmp = [accessory.serialNumber capitalizedString];
+         if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound && [serialNumberTmp isEqualToString:serialNumberPda]){
              serialNumber = accessory.serialNumber;
              break;
              //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
