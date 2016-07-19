@@ -39,8 +39,12 @@
      NSArray *array = [zplData componentsSeparatedByString:@"^FS"];
   
   for (NSString* key in array) {
-    NSString* dataStr = key + @"^FS";
-	success = success && [thePrinterConn write:[dataStr dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+  
+  NSString *str = [NSString stringWithFormat: @"%@ %@", key, @"^FS"];
+  
+   
+	
+	success = success && [thePrinterConn write:[str dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 }
   
 	 
