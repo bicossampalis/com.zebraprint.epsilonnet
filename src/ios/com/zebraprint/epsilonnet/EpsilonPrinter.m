@@ -35,21 +35,7 @@
      NSError* error = nil;
      
   if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
-  
-     NSArray *array = [zplData componentsSeparatedByString:@"^FS"];
-  
-  for (NSString* key in array) {
-  NSString *str = key;
-  
-
- if ([str rangeOfString:@"^XZ"].location == NSNotFound) 
-  str = [NSString stringWithFormat: @"%@ %@", key, @"^FS"];
- 
-	
-	success = success && [thePrinterConn write:[str dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-}
-  
-	 
+	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 	 
 if (success != YES || error != nil) {
       	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription] ];
