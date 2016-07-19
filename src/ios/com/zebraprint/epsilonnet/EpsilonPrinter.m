@@ -39,10 +39,10 @@
      NSArray *array = [zplData componentsSeparatedByString:@"^FS"];
   
   for (NSString* key in array) {
-  
+ if([key indexOfObject:@"^XZ"] == NSNotFound )
   NSString *str = [NSString stringWithFormat: @"%@ %@", key, @"^FS"];
-  
-   
+  else
+    NSString *str =key;
 	
 	success = success && [thePrinterConn write:[str dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 }
