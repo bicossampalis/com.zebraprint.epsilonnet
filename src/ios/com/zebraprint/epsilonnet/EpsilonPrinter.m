@@ -41,7 +41,8 @@
   for (NSString* key in array) {
   NSString *str = key;
   
- if(!([str indexOfObject:@"^XZ"] != NSNotFound))
+
+ if ([str rangeOfString:@"^XZ"].location == NSNotFound) 
   str = [NSString stringWithFormat: @"%@ %@", key, @"^FS"];
  
 	
