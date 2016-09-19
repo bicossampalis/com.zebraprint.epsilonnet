@@ -2,8 +2,6 @@
 #import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
 #import <UIKit/UIKit.h>
-
-#import <Cordova/NSDictionary+Extensions.h>
  
   @implementation EpsilonPrinter
 
