@@ -11,8 +11,6 @@
 
 -(void)sendZplOverBluetooth:(CDVInvokedUrlCommand*)command;
 
--(void)skataAlert:(CDVInvokedUrlCommand*)command;
-
 -(void)findPrinter:(CDVInvokedUrlCommand*)command;
 
 @end
