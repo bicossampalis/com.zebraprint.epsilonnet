@@ -12,7 +12,7 @@
 
 - (BOOL) isHeadTooHot
 
-- (ZplPrintMode) printMode
+
 
 
 - (BOOL) isPartialFormatInProgress

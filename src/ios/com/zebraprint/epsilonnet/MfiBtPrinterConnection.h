@@ -14,7 +14,7 @@
 #import <Foundation/Foundation.h>
 #import <ExternalAccessory/ExternalAccessory.h>
 #import "ZebraPrinterConnection.h"
-#import "PrinterStatus.h" 
+
 
 /**
  * Establishes a Bluetooth connection to a printer.
