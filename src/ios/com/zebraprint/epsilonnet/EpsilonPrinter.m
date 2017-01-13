@@ -2,6 +2,9 @@
 #import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
 #import <UIKit/UIKit.h>
+#import "ZebraPrinterFactory.h"
+#import "ZebraPrinter.h" 
+#import "PrinterStatus.h" 
  
   @implementation EpsilonPrinter
 
@@ -31,9 +34,27 @@
      NSString* zplData = [command.arguments objectAtIndex:1];
      
      NSError* error = nil;
-     
-  if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
+	 
+	 
+
+	 
+	 
+	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
+			 if (printerStatus.isReadyToPrint) {
+			 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+			 } else if (printerStatus.isPaused) {
+			 error = @"Cannot Print because the printer is paused."; 
+			
+			 } else if (printerStatus.isHeadOpen) {
+			 error = @"Cannot Print because the printer head is open."; 
+			
+			 } else if (printerStatus.isPaperOut) {
+			 error = @"Cannot Print because the paper is out."; 
+			 } else { 
+			 error = @"Cannot Print."; 
+				}
+	 
 	 
 if (success != YES || error != nil) {
       	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription] ];
@@ -51,11 +72,6 @@ if (success != YES || error != nil) {
  }
 
  
- -(void)skataAlert:(CDVInvokedUrlCommand*)command{
- 
-   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-}
 
  -(void)findPrinter:(CDVInvokedUrlCommand*)command{
  

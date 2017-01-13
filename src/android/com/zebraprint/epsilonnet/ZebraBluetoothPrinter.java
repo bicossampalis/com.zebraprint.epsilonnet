@@ -135,6 +135,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
         } else {
             throw new ConnectionException("Cannot Print.");
         }
+		 connection.close();
         return isOK;
     }
 }
