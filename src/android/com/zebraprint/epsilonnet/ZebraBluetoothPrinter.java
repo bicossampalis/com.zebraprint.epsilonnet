@@ -88,33 +88,11 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
             public void run() {
                 try {
 				
-					// cordova.getActivity().runOnUiThread(new Runnable() {
-						// public void run() {
-							// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "2", Toast.LENGTH_SHORT);
-							// toast.show();
-						// }
-					// });
-                    // Instantiate insecure connection for given Bluetooth MAC Address.
+					
                     Connection thePrinterConn = new BluetoothConnectionInsecure(mac);
 
-					// cordova.getActivity().runOnUiThread(new Runnable() {
-						// public void run() {
-							// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "3", Toast.LENGTH_SHORT);
-							// toast.show();
-						// }
-					// });
-					
-					
-                    // Verify the printer is ready to print
-                    //if (isPrinterReady(thePrinterConn)) {
+					 if (isPrinterReady(thePrinterConn)) {
 
-						// cordova.getActivity().runOnUiThread(new Runnable() {
-							// public void run() {
-								// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "10", Toast.LENGTH_SHORT);
-								// toast.show();
-							// }
-						// });
-					
                         // Open the connection - physical connection is established here.
                         thePrinterConn.open();
 
@@ -129,9 +107,9 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
                         // Close the insecure connection to release resources.
                         thePrinterConn.close();
                         callbackContext.success("Done");
-                    //} else {
-						//callbackContext.error("Printer is not ready");
-					//}
+                    } else {
+						callbackContext.error("printer is not ready");
+					}
                 } catch (Exception e) {
                     // Handle communications error here.
                     callbackContext.error(e.getMessage());
@@ -141,79 +119,22 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
     }
 
     private Boolean isPrinterReady(Connection connection) throws ConnectionException, ZebraPrinterLanguageUnknownException {
-        Boolean isOK = false;
-		
-		// cordova.getActivity().runOnUiThread(new Runnable() {
-			// public void run() {
-				// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "4", Toast.LENGTH_SHORT);
-				// toast.show();
-			// }
-		// });
-		
+         Boolean isOK = false;
         connection.open();
-		
-		
-		// cordova.getActivity().runOnUiThread(new Runnable() {
-			// public void run() {
-				// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "5", Toast.LENGTH_SHORT);
-				// toast.show();
-			// }
-		// });
-		
-		
-		
         // Creates a ZebraPrinter object to use Zebra specific functionality like getCurrentStatus()
         ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
-		
-		// cordova.getActivity().runOnUiThread(new Runnable() {
-			// public void run() {
-				// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "6", Toast.LENGTH_SHORT);
-				// toast.show();
-			// }
-		// });
-		
-		//PrinterStatus printerStatus = printer.getCurrentStatus();
-		
-		ZebraPrinterLinkOs linkOsPrinter = ZebraPrinterFactory.createLinkOsPrinter(printer);
-		
-		// cordova.getActivity().runOnUiThread(new Runnable() {
-			// public void run() {
-				// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "7", Toast.LENGTH_SHORT);
-				// toast.show();
-			// }
-		// });
-		
-		
-		PrinterStatus printerStatus = (linkOsPrinter != null) ? linkOsPrinter.getCurrentStatus() : printer.getCurrentStatus();
-
-		// cordova.getActivity().runOnUiThread(new Runnable() {
-			// public void run() {
-				// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "8", Toast.LENGTH_SHORT);
-				// toast.show();
-			// }
-		// });
-		
-		if (printerStatus == null) {
-			throw new ConnectionException("Cannot print because the printer is null");
-		} else if (printerStatus.isReadyToPrint) {
+        PrinterStatus printerStatus = printer.getCurrentStatus();
+        if (printerStatus.isReadyToPrint) {
             isOK = true;
         } else if (printerStatus.isPaused) {
-            throw new ConnectionException("Cannot print because the printer is paused");
+            throw new ConnectionException("Cannot Print because the printer is paused.");
         } else if (printerStatus.isHeadOpen) {
-            throw new ConnectionException("Cannot print because the printer media door is open");
+            throw new ConnectionException("Cannot Print because the printer media door is open.");
         } else if (printerStatus.isPaperOut) {
-            throw new ConnectionException("Cannot print because the paper is out");
+            throw new ConnectionException("Cannot Print because the paper is out.");
         } else {
-            throw new ConnectionException("Cannot print");
+            throw new ConnectionException("Cannot Print.");
         }
-		
-		// cordova.getActivity().runOnUiThread(new Runnable() {
-			// public void run() {
-				// Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), "9", Toast.LENGTH_SHORT);
-				// toast.show();
-			// }
-		// });
-		
         return isOK;
     }
 }
