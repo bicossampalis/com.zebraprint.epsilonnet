@@ -2,8 +2,9 @@
 #import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
 #import <UIKit/UIKit.h>
+#import <PrinterStatus.h>
 //#import "ZebraPrinter.h" 
-#import "PrinterStatus.h" 
+//#import "PrinterStatus.h" 
  
   @implementation EpsilonPrinter
 
