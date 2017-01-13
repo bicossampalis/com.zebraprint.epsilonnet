@@ -1,6 +1,7 @@
 #import "EpsilonPrinter.h"
 #import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
+#import "PrinterStatus.h" 
 #import <UIKit/UIKit.h>
 //#import <PrinterStatus.h>
 
