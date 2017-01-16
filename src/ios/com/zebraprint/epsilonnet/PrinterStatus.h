@@ -20,25 +20,25 @@
 
 - (id) init;			
 
-- (BOOL) isHeadCold;
+//- (BOOL) isHeadCold;
 
-- (BOOL) isHeadTooHot;
-
-
+//- (BOOL) isHeadTooHot;
 
 
-- (BOOL) isPartialFormatInProgress;
-
-- (BOOL) isReceiveBufferFull;
-
-- (NSInteger) labelsRemainingInBatch;
 
 
-- (NSInteger) numberOfFormatsInReceiveBuffer;
+//- (BOOL) isPartialFormatInProgress;
 
-- (NSInteger) labelLengthInDots;
+//- (BOOL) isReceiveBufferFull;
 
-- (BOOL) isPaused;
+//- (NSInteger) labelsRemainingInBatch;
+
+
+//- (NSInteger) numberOfFormatsInReceiveBuffer;
+
+//- (NSInteger) labelLengthInDots;
+
+//- (BOOL) isPaused;
 
 //- (ZplPrintMode) printMode;
 
