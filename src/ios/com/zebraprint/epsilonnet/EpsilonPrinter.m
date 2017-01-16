@@ -40,6 +40,8 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
 	 
 	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
+	 
+	 if (error == nil) {
 			 if (printerStatus.isReadyToPrint) {
 			 
 			 
@@ -76,7 +78,7 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
  //@"Cannot Print."; 
 				}
-	 
+	 }
 	 
 if (success != YES || error != nil) {
 [thePrinterConn close];
