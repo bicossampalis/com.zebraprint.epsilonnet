@@ -42,16 +42,16 @@
      
      NSString* zplData = [command.arguments objectAtIndex:1];
      
-     NSError* error = nil;
+     NSError* error2 = nil;
 
 	 
 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
-	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
-	  
-	 if (error == nil) {
-	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
-
-	 if (error == nil) {
+	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error2];
+	       NSError* error3 = nil;
+	 //if (error == nil) {
+	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error3];
+NSError* error = nil;
+	 //if (error == nil) {
 			 if (printerStatus.isReadyToPrint) {
 			 
 			 
@@ -88,8 +88,8 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
  //@"Cannot Print."; 
 				}
-	 }
-	 	 }
+	// }
+	 	// }
 
 	 
 if (success != YES || error != nil) {
