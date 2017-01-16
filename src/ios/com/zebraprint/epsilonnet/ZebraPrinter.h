@@ -1,6 +1,6 @@
 #import "ZebraPrinterFactory.h"
 #import <UIKit/UIKit.h>
-
+#import "PrinterStatus.h"
 
 
 @protocol ZebraPrinter
@@ -8,7 +8,7 @@
 
 //- (enum) PrinterLanguage;
 
-//- (PrinterStatus *) getCurrentStatus:		(NSError **) 	error	;
+- (PrinterStatus *) getCurrentStatus: (NSError **) 	error	;
 
 
 //- (id<FileUtil, NSObject>) getFileUtil			;
