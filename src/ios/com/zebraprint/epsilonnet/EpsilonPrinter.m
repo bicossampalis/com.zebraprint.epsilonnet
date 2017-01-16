@@ -3,7 +3,7 @@
 #import <ExternalAccessory/ExternalAccessory.h>
 #import <UIKit/UIKit.h>
 //#import <PrinterStatus.h>
-#import "PrinterStatus.h" 
+
  
   @implementation EpsilonPrinter
 
@@ -36,7 +36,7 @@
 	 
 	 
 
-	 
+	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:zebraPrinterConnection error:&error];
 	 
 	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
 			 if (printerStatus.isReadyToPrint) {
