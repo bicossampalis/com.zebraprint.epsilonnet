@@ -116,6 +116,10 @@
  *	<li>As a best pracitce, Zebra recommends not making calls to our API from the GUI thread. Use <a href="http://developer.apple.com/library/ios/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch</a> to accomplish this.</li>
  *	<li>Only Mobile printers are available with built-in magnetic card readers</li>
  *	<li>Each ZebraPrinterConnection object should only be used on a single thread</li>
+ *  <li>In iOS 9, a new Build Variant “Enable Bitcode” was introduced.
+	This variant is initially set to “Yes” which may cause any project using the ZSDK_API
+	to not build properly.<br><ul><li>To change this, go into xCode > Build Settings > Build Options
+	and set “Enable Bitcode” to “No” for the project to be exported.</li></ul></li>
  *	</ol>
  *
  *  <b>Project Settings and Configuration</b>

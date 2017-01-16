@@ -19,7 +19,7 @@
  *  Get the current status of a printer.
  *
  *  \code
-#import "ZebraPrinterConnection.h"
+#import "TcpPrinterConnection.h"
 #import "ZebraPrinterFactory.h"
 #import "ZebraPrinter.h"
 #import "PrinterStatus.h"
