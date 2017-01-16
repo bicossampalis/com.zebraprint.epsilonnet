@@ -34,21 +34,20 @@
      NSString* zplData = [command.arguments objectAtIndex:1];
      
      NSError* error = nil;
-	NSString *desc = NSLocalizedString(@"Unable to…", @"");
-    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : desc };
-	 
 
+	 
+if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
 	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
 	 
 	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
 			 if (printerStatus.isReadyToPrint) {
-			 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
+			 
+			 
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-			 } else if (printerStatus.isPaused) {
+			
+ } else if (printerStatus.isPaused) {
 			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer is paused"}];
 
-        
- //@"Cannot Print because the printer is paused."; 
 			
 			 } else if (printerStatus.isHeadOpen) {
 			 error =  [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
@@ -64,6 +63,7 @@
 	 
 	 
 if (success != YES || error != nil) {
+[thePrinterConn close];
       	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription] ];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
