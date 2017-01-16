@@ -33,26 +33,33 @@
      
      NSString* zplData = [command.arguments objectAtIndex:1];
      
-     NSError** error = nil;
-	 
+     NSError* error = nil;
+	NSString *desc = NSLocalizedString(@"Unable to…", @"");
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : desc };
 	 
 
-	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:zebraPrinterConnection error:&error];
+	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:ZebraPrinterConnection error:&error];
 	 
 	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
 			 if (printerStatus.isReadyToPrint) {
 			 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 			 } else if (printerStatus.isPaused) {
-			 error = @"Cannot Print because the printer is paused."; 
+			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer is paused"}];
+
+        
+ //@"Cannot Print because the printer is paused."; 
 			
 			 } else if (printerStatus.isHeadOpen) {
-			 error = @"Cannot Print because the printer head is open."; 
+			 error =  [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+			 //@"Cannot Print because the printer head is open."; 
 			
 			 } else if (printerStatus.isPaperOut) {
-			 error = @"Cannot Print because the paper is out."; 
+			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+// @"Cannot Print because the paper is out."; 
 			 } else { 
-			 error = @"Cannot Print."; 
+			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print"}];
+ //@"Cannot Print."; 
 				}
 	 
 	 
