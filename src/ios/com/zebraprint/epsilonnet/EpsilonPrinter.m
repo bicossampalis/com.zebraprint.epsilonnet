@@ -46,18 +46,18 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 			
  } else if (printerStatus.isPaused) {
-			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer is paused"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the printer is paused" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer is paused"}];
 
 			
 			 } else if (printerStatus.isHeadOpen) {
-			 error =  [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+			 error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:201 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
 			 //@"Cannot Print because the printer head is open."; 
 			
 			 } else if (printerStatus.isPaperOut) {
-			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:202 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 // @"Cannot Print because the paper is out."; 
 			 } else { 
-			 error = [[NSError alloc] initWithDomain:@"com.epsilonnet.zebra" code:200 userInfo:@{@"Error reason": @"Cannot Print"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
  //@"Cannot Print."; 
 				}
 	 
