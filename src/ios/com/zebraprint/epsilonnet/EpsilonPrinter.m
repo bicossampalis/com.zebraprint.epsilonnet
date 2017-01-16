@@ -42,16 +42,18 @@
      
      NSString* zplData = [command.arguments objectAtIndex:1];
      
-     NSError* error2 = nil;
-
+NSError* error = nil;
 	 
 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
-	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error2];
-	       NSError* error3 = nil;
-	 //if (error == nil) {
-	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error3];
-NSError* error = nil;
-	 //if (error == nil) {
+	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
+	   if (error != nil)
+	   error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:800 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+	 else (error == nil) {
+	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
+
+	 if (error != nil)
+	   error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:900 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+	 else (error == nil) {
 			 if (printerStatus.isReadyToPrint) {
 			 
 			 
@@ -88,8 +90,8 @@ NSError* error = nil;
 			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
  //@"Cannot Print."; 
 				}
-	// }
-	 	// }
+	 }
+	 	 }
 
 	 
 if (success != YES || error != nil) {
