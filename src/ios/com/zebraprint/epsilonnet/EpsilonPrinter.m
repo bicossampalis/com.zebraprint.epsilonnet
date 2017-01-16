@@ -56,7 +56,23 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 			 } else if (printerStatus.isPaperOut) {
 			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:202 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 // @"Cannot Print because the paper is out."; 
-			 } else { 
+			 } 
+			 else if (printerStatus.isHeadTooHot) {
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:204 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+
+			 }else if (printerStatus.isHeadCold) {
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:205 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+
+			 } else if (printerStatus.isRibbonOut) {
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:206 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+
+			 } else if (printerStatus.isReceiveBufferFull) {
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:207 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+
+			 } else if (printerStatus.isPartialFormatInProgress) {
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:208 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+
+			 }  else { 
 			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
  //@"Cannot Print."; 
 				}
