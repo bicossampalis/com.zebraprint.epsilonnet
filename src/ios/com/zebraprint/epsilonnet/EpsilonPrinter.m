@@ -38,7 +38,7 @@
     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : desc };
 	 
 
-	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:ZebraPrinterConnection error:&error];
+	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
 	 
 	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
 			 if (printerStatus.isReadyToPrint) {
