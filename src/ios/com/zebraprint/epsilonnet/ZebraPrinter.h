@@ -62,11 +62,11 @@ typedef enum {
 	/**
 	 * Printer control language CPCL
 	 */
-	PRINTER_LANGUAGE_CPCL
+	PRINTER_LANGUAGE_CPCL,
 	
-	ZPL
+	ZPL,
 	
-	CPCL
+	CPCL,
 	
     LINE_PRINT
 } PrinterLanguage;

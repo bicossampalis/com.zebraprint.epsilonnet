@@ -36,7 +36,8 @@
 
      id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
      
-     
+      [((MfiBtPrinterConnection*)thePrinterConn) setTimeToWaitAfterWriteInMilliseconds:30];
+	  
      BOOL success = [thePrinterConn open];
      
      NSString* zplData = [command.arguments objectAtIndex:1];
