@@ -104,7 +104,7 @@ if (success != YES || error != nil) {
 	 
 	 
 	 
-	  if ([zplData isEqualToString:@"close"])
+	 // if ([zplData isEqualToString:@"close"])
 	 [thePrinterConn close];
  }
 
