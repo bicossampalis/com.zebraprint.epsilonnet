@@ -28,6 +28,6 @@
 
 - (BOOL) isPaused;
 
-- (ZplPrintMode) printMode;
+//- (ZplPrintMode) printMode;
 
 @end

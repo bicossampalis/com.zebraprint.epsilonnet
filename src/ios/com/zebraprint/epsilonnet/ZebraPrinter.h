@@ -1,14 +1,14 @@
 #import "ZebraPrinterFactory.h"
-#import "ZebraPrinter.h"
+#import <UIKit/UIKit.h>
 
 
 
-@protocol PrinterStatus
+@protocol ZebraPrinter
 
 
-- (enum) PrinterLanguage;
+//- (enum) PrinterLanguage;
 
-- (PrinterStatus *) getCurrentStatus:		(NSError **) 	error	;
+//- (PrinterStatus *) getCurrentStatus:		(NSError **) 	error	;
 
 
 - (id<FileUtil, NSObject>) getFileUtil			;
@@ -22,7 +22,7 @@
 - (id<MagCardReader, NSObject>) getMagCardReader;			
 
 
-- (PrinterLanguage) getPrinterControlLanguage	;		
+//- (PrinterLanguage) getPrinterControlLanguage	;		
 
 - (id<SmartCardReader, NSObject>) getSmartCardReader	;		
 
