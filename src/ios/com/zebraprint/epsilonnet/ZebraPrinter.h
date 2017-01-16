@@ -1,6 +1,6 @@
 #import "ZebraPrinterFactory.h"
 #import <UIKit/UIKit.h>
-#import "PrinterStatus.h"
+
 
 
 @protocol ZebraPrinter
