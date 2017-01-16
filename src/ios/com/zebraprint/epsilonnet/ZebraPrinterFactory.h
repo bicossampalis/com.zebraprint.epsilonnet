@@ -1,6 +1,6 @@
 
 #import "ZebraPrinter.h"
-
+#import "PrinterStatus.h"
 
 
 @interface ZebraPrinterFactory
