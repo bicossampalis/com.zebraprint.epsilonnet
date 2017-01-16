@@ -2,8 +2,9 @@
 #import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
 #import <UIKit/UIKit.h>
-#import <PrinterStatus.h>
+#import "PrinterStatus.h"
 #import "ZebraPrinter.h"
+#import "ZebraPrinterConnection.h"
  
   @implementation EpsilonPrinter
 
@@ -32,7 +33,7 @@
      
      NSString* zplData = [command.arguments objectAtIndex:1];
      
-     NSError* error = nil;
+     NSError** error = nil;
 	 
 	 
 

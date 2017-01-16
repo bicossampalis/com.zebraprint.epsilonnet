@@ -5,6 +5,18 @@
 
 @interface PrinterStatus
 
+@property BOOL 	isReadyToPrint;
+@property BOOL 	isHeadOpen;
+@property BOOL 	isHeadCold;
+@property BOOL 	isHeadTooHot;
+@property BOOL 	isPaperOut;
+@property BOOL 		isRibbonOut;
+@property BOOL 	isReceiveBufferFull;
+@property BOOL 	isPaused;
+//@property NSInteger 	 	labelLengthInDots;
+//@property NSInteger 	 	numberOfFormatsInReceiveBuffer;
+//@property NSInteger 	 	labelsRemainingInBatch;
+@property BOOL 	isPartialFormatInProgress;
 
 - (id) init;			
 
