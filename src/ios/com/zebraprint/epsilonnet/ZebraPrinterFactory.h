@@ -1,9 +1,9 @@
 
+#import "ZebraPrinter.h"
 
 
 
-
-@protocol ZebraPrinterFactory
+@interface ZebraPrinterFactory
 
 
 + (id<ZebraPrinter,NSObject>) getInstance:(id< ZebraPrinterConnection, NSObject >) 	connection error:(NSError **);

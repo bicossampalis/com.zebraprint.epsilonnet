@@ -1,9 +1,9 @@
+#import "ZebraPrinterFactory.h"
+#import "ZebraPrinter.h"
 
 
 
-
-
-@protocol PrinterStatus
+@interface PrinterStatus
 
 
 - (id) init;			
