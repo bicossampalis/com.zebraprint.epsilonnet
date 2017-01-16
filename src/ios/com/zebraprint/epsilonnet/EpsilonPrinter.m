@@ -5,6 +5,8 @@
 //#import "PrinterStatus.h"
 //#import "ZebraPrinter.h"
 #import "ZebraPrinterConnection.h"
+#import "PrinterStatus.h"
+#import "ZebraPrinter.h"
  
   @implementation EpsilonPrinter
 
@@ -25,6 +27,8 @@
              //Note: This will find the first printer connected! If you have multiple Zebra printers connected, you should display a list to the user and have him select the one they wish to use
          }
      }
+	 
+	 
 
      id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
      
@@ -38,9 +42,10 @@
 	 
 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
 	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
-	 
+	  
+	 if (error == nil) {
 	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
-	 
+
 	 if (error == nil) {
 			 if (printerStatus.isReadyToPrint) {
 			 
@@ -60,25 +65,27 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 // @"Cannot Print because the paper is out."; 
 			 } 
 			 else if (printerStatus.isHeadTooHot) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:204 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Head is Too Hot" code:204 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
 			 }else if (printerStatus.isHeadCold) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:205 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Head is Cold" code:205 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
 			 } else if (printerStatus.isRibbonOut) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:206 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Ribbon is Out" code:206 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
 			 } else if (printerStatus.isReceiveBufferFull) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:207 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Buffer Is Full" code:207 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
 			 } else if (printerStatus.isPartialFormatInProgress) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:208 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+			 error = [[NSError alloc] initWithDomain:@"" code:208 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
 			 }  else { 
 			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
  //@"Cannot Print."; 
 				}
 	 }
+	 	 }
+
 	 
 if (success != YES || error != nil) {
 [thePrinterConn close];
@@ -90,6 +97,8 @@ if (success != YES || error != nil) {
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	 }
 	 }
+	 
+	 
 	 
 	 
 	  if ([zplData isEqualToString:@"close"])
