@@ -10,6 +10,7 @@
  #import "EpsilonPrinter.h"
  #import <ExternalAccessory/ExternalAccessory.h>
  #import "MfiBtPrinterConnection.h"
+ #import "ZebraPrinterFactory.h"
  
   @implementation EpsilonPrinter
 
