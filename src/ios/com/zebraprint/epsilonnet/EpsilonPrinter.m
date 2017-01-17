@@ -36,7 +36,7 @@
 
      id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:serialNumber];
      
-      [((MfiBtPrinterConnection*)thePrinterConn) setTimeToWaitAfterWriteInMilliseconds:100];
+      //[((MfiBtPrinterConnection*)thePrinterConn) setTimeToWaitAfterWriteInMilliseconds:100];
 	  
      BOOL success = [thePrinterConn open];
      
@@ -45,59 +45,64 @@
 NSError* error = nil;
 	 
 if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]){
-	  id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
-	   if (error != nil)
-	   error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:800 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
-	 else if (error == nil) {
-	 PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
 
-	 if (error != nil)
-	   error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:900 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
-	 else if (error == nil) {
-			 if (printerStatus.isReadyToPrint) {
+success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+
+
+
+	 id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
+//if (error != nil)
+//    error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:800 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+//else if (error == nil) {
+//    PrinterStatus *printerStatus = [printer getCurrentStatus:&error];
+
+//    if (error != nil)
+//        error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:900 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+//else if (error == nil) {
+//    if (printerStatus.isReadyToPrint) {
 			 
 			 
-	 success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+//        success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 			
- } else if (printerStatus.isPaused) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the printer is paused" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer is paused"}];
+//    } else if (printerStatus.isPaused) {
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print because the printer is paused" code:200 userInfo:@{@"Error reason": @"Cannot Print because the printer is paused"}];
 
 			
-			 } else if (printerStatus.isHeadOpen) {
-			 error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:201 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
-			 //@"Cannot Print because the printer head is open."; 
+//    } else if (printerStatus.isHeadOpen) {
+//        error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:201 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
+//        //@"Cannot Print because the printer head is open."; 
 			
-			 } else if (printerStatus.isPaperOut) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:202 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
-// @"Cannot Print because the paper is out."; 
-			 } 
-			 else if (printerStatus.isHeadTooHot) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Head is Too Hot" code:204 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+//    } else if (printerStatus.isPaperOut) {
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print because the paper is out" code:202 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+//        // @"Cannot Print because the paper is out."; 
+//    } 
+//    else if (printerStatus.isHeadTooHot) {
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print because the Head is Too Hot" code:204 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
-			 }else if (printerStatus.isHeadCold) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Head is Cold" code:205 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+//    }else if (printerStatus.isHeadCold) {
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print because the Head is Cold" code:205 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
-			 } else if (printerStatus.isRibbonOut) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Ribbon is Out" code:206 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+//    } else if (printerStatus.isRibbonOut) {
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print because the Ribbon is Out" code:206 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
-			 } else if (printerStatus.isReceiveBufferFull) {
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print because the Buffer Is Full" code:207 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+//    } else if (printerStatus.isReceiveBufferFull) {
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print because the Buffer Is Full" code:207 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
-			 } else if (printerStatus.isPartialFormatInProgress) {
-			 error = [[NSError alloc] initWithDomain:@"" code:208 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
+//    } else if (printerStatus.isPartialFormatInProgress) {
+//        error = [[NSError alloc] initWithDomain:@"" code:208 userInfo:@{@"Error reason": @"Cannot Print because the paper is out"}];
 
-			 }  else { 
-			 error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
- //@"Cannot Print."; 
-				}
-	 }
-	 	 }
+//    }  else { 
+//        error = [[NSError alloc] initWithDomain:@"Cannot Print" code:203 userInfo:@{@"Error reason": @"Cannot Print"}];
+//        //@"Cannot Print."; 
+//    }
+//}
+//	 	 }
 
 	 
 if (success != YES || error != nil) {
-[thePrinterConn close];
+      [thePrinterConn close];
       	   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription] ];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+      [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
      }
      else{
 	  CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:command.callbackId];
@@ -108,7 +113,7 @@ if (success != YES || error != nil) {
 	 
 	 
 	 
-	 // if ([zplData isEqualToString:@"close"])
+ if ([zplData isEqualToString:@"close"])
 	 [thePrinterConn close];
  }
 
