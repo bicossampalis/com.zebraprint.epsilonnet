@@ -50,7 +50,7 @@ if (![zplData isEqualToString:@"connect"] && ![zplData isEqualToString:@"close"]
 
 
 
-	 id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn error:&error];
+	 id<ZebraPrinter, NSObject> printer = [ZebraPrinterFactory getInstance:thePrinterConn withPrinterLanguage:PRINTER_LANGUAGE_ZPL];
 if (error != nil)
     error =  [[NSError alloc] initWithDomain:@"Cannot Print because the printer head is open" code:800 userInfo:@{@"Error reason": @"Cannot Print because the printer head is open"}];
 else if (error == nil) {
