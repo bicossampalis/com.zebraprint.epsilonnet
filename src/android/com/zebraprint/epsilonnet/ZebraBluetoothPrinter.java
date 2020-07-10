@@ -1,27 +1,16 @@
 package com.zebraprint.epsilonnet;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Looper;
-import android.util.Base64;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.zebra.sdk.graphics.internal.ZebraImageAndroid;
-import com.zebra.android.discovery.*;
-import com.zebra.sdk.comm.*;
-import com.zebra.sdk.printer.*;
+import java.io.IOException;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.Set;
-
+import android.util.Log;
+import android.widget.Toast;
+import com.zebra.android.discovery.*;
+import com.zebra.sdk.comm.*;
+import com.zebra.sdk.printer.*;
 
 public class ZebraBluetoothPrinter extends CordovaPlugin {
 
@@ -33,23 +22,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		if (action.equals("printImage")) {
-            try {
-                JSONArray labels = args.getJSONArray(1);
-                String MACAddress = args.getString(0);
-                speed = args.getInt(2);
-                time = args.getInt(3);
-                number = args.getInt(4);
-                for (int i = 1; i < number; i++)
-                {
-                    labels.put(labels.get(0));
-                }
-                sendImage(labels, MACAddress);
-            } catch (IOException e) {
-               callbackContext.error(e.getMessage());
-            }
-            return true;
-        }
+
         if (action.equals("print")) {
             try {
                 String mac = args.getString(0);
@@ -106,189 +79,6 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
       }      
     }
 
-	 private void sendImage(final JSONArray labels, final String MACAddress) throws IOException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                printLabels(labels, MACAddress);
-            }
-        }).start();
-    }
-	
-	 private void printLabels(JSONArray labels, String MACAddress) {
-        try {
-
-            boolean isConnected = openBluetoothConnection(MACAddress);
-
-            if (isConnected) {
-                initializePrinter();
-
-                boolean isPrinterReady = getPrinterStatus(0);
-
-                if (isPrinterReady) {
-
-                    printLabel(labels);
-
-                    //Voldoende wachten zodat label afgeprint is voordat we een nieuwe printer-operatie starten.
-
-                    //Thread.sleep(15000);
-					
-					//SGD.SET("device.languages", "line_print", thePrinterConn);
-
-                    thePrinterConn.close();
-
-                    callbackContext.success();
-                } else {
-                    Log.e(LOG_TAG, "Printer not ready");
-                    callbackContext.error("Tiskalnik še ni pripravljen.");
-                }
-
-            }
-
-        } catch (ConnectionException e) {
-            Log.e(LOG_TAG, "Connection exception: " + e.getMessage());
-
-            //De connectie tussen de printer & het toestel is verloren gegaan.
-            if (e.getMessage().toLowerCase().contains("broken pipe")) {
-                callbackContext.error("Povezava med napravo in tiskalnikom je bila prekinjena. Poskusite znova.");
-
-                //Geen printer gevonden via bluetooth, -1 teruggeven zodat er gezocht wordt naar nieuwe printers.
-            } else if (e.getMessage().toLowerCase().contains("socket might closed")) {
-                int SEARCH_NEW_PRINTERS = -1;
-                callbackContext.error(SEARCH_NEW_PRINTERS);
-            } else {
-                callbackContext.error("Prišlo je do neznane napake tiskalnika. Znova zaženite tiskalnik in poskusite znova.");
-            }
-
-        } catch (ZebraPrinterLanguageUnknownException e) {
-            Log.e(LOG_TAG, "ZebraPrinterLanguageUnknown exception: " + e.getMessage());
-            callbackContext.error("Prišlo je do neznane napake tiskalnika. Znova zaženite tiskalnik in poskusite znova.");
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Exception: " + e.getMessage());
-            callbackContext.error(e.getMessage());
-        }
-    }
-	
-	private void printLabel(JSONArray labels) throws Exception {
-        ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer);
-
-        for (int i = labels.length() - 1; i >= 0; i--) {
-            String base64Image = labels.get(i).toString();
-            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            ZebraImageAndroid zebraimage = new ZebraImageAndroid(decodedByte);
-
-int labelHeight = Integer.valueOf(zebraimage.getHeight());
-int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
-
-
-            //Lengte van het label eerst instellen om te kleine of te grote afdruk te voorkomen
-            if (zebraPrinterLinkOs != null && i == labels.length() - 1) {
-                setLabelLength(zebraimage);
-            }
-
-            if (zebraPrinterLinkOs != null) {
-                printer.printImage(zebraimage, 20, 20, zebraimage.getWidth(), zebraimage.getHeight(), false);
-            } else {
-                Log.d(LOG_TAG, "Storing label on printer...");
-                printer.storeImage("wgkimage.pcx", zebraimage, -1, -1);
-                printImageTheOldWay(zebraimage);
-                SGD.SET("device.languages", "line_print", thePrinterConn);
-            }
-
-            Thread.sleep(labelSleep);
-            if (i > 0)
-            {
-                Thread.sleep(1000 * time);
-            }
-        }
-
-    }
-	
-	 private boolean getPrinterStatus(int retryAttempt) throws Exception {
-        try {
-            printerStatus = printer.getCurrentStatus();
-
-            if (printerStatus.isReadyToPrint) {
-                Log.d(LOG_TAG, "Printer is ready to print...");
-                return true;
-            } else {
-                if (printerStatus.isPaused) {
-                    throw new Exception("Printer is gepauzeerd. Gelieve deze eerst te activeren.");
-                } else if (printerStatus.isHeadOpen) {
-                    throw new Exception("Printer staat open. Gelieve deze eerst te sluiten.");
-                } else if (printerStatus.isPaperOut) {
-                    throw new Exception("Gelieve eerst de etiketten aan te vullen.");
-                } else {
-                    throw new Exception("Kon de printerstatus niet ophalen. Gelieve opnieuw te proberen. " +
-                        "Herstart de printer indien dit probleem zich blijft voordoen");
-                }
-            }
-        } catch (ConnectionException e) {
-            if (retryAttempt < MAX_PRINT_RETRIES) {
-                Thread.sleep(5000);
-                return getPrinterStatus(++retryAttempt);
-            } else {
-                throw new Exception("Kon de printerstatus niet ophalen. Gelieve opnieuw te proberen. " +
-                    "Herstart de printer indien dit probleem zich blijft voordoen.");
-            }
-        }
-
-    }
-
-    /**
-     * Gebruik de Zebra Android SDK om de lengte te bepalen indien de printer LINK-OS ondersteunt
-     *
-     * @param zebraimage
-     * @throws Exception
-     */
-    private void setLabelLength(ZebraImageAndroid zebraimage) throws Exception {
-        ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer);
-
-        if (zebraPrinterLinkOs != null) {
-            String currentLabelLength = zebraPrinterLinkOs.getSettingValue("zpl.label_length");
-			Log.d(LOG_TAG, "mitja " + currentLabelLength);
-            if (!currentLabelLength.equals(String.valueOf(zebraimage.getHeight()))) {
-				// printer_diff
-				Log.d(LOG_TAG, "mitja me " + zebraimage.getHeight());
-                zebraPrinterLinkOs.setSetting("zpl.label_length", zebraimage.getHeight() + "");
-            }
-        }
-    }
-	
-	private void initializePrinter() throws ConnectionException, ZebraPrinterLanguageUnknownException {
-        Log.d(LOG_TAG, "Initializing printer...");
-        printer = ZebraPrinterFactory.getInstance(thePrinterConn);
-        String printerLanguage = SGD.GET("device.languages", thePrinterConn);
-
-        if (!printerLanguage.contains("zpl")) {
-			// print diff
-            SGD.SET("device.languages", "hybrid_xml_zpl", thePrinterConn);
-            Log.d(LOG_TAG, "printer language set...");
-        }
-    }
-
-	 private boolean openBluetoothConnection(String MACAddress) throws ConnectionException {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (bluetoothAdapter.isEnabled()) {
-            Log.d(LOG_TAG, "Creating a bluetooth-connection for mac-address " + MACAddress);
-
-            thePrinterConn = new BluetoothConnection(MACAddress);
-
-            Log.d(LOG_TAG, "Opening connection...");
-            thePrinterConn.open();
-            Log.d(LOG_TAG, "connection successfully opened...");
-
-            return true;
-        } else {
-            Log.d(LOG_TAG, "Bluetooth is disabled...");
-            callbackContext.error("Bluetooth ni vklopljen.");
-        }
-
-        return false;
-    }
     /*
      * This will send data to be printed by the bluetooth printer
      */
@@ -353,4 +143,3 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
         return isOK;
     }
 }
-
