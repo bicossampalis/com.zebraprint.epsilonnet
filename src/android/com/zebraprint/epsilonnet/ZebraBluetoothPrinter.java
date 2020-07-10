@@ -180,7 +180,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
     }
 	
 	private void printLabel(JSONArray labels) throws Exception {
-        ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer);
+        ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer2);
 
         for (int i = labels.length() - 1; i >= 0; i--) {
             String base64Image = labels.get(i).toString();
@@ -204,7 +204,7 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
                 Log.d(LOG_TAG, "Storing label on printer...");
                 printer2.storeImage("wgkimage.pcx", zebraimage, -1, -1);
                 printImageTheOldWay(zebraimage);
-                SGD.SET("device.languages", "line_print", thePrinterConn);
+                SGD.SET("device.languages", "line_print", thePrinterConn2);
             }
 
             Thread.sleep(labelSleep);
@@ -218,7 +218,7 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
 	
 	 private boolean getPrinterStatus(int retryAttempt) throws Exception {
         try {
-            printerStatus2 = printer.getCurrentStatus();
+            printerStatus2 = printer2.getCurrentStatus();
 
             if (printerStatus2.isReadyToPrint) {
                 Log.d(LOG_TAG, "Printer is ready to print...");
@@ -226,9 +226,9 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
             } else {
                 if (printerStatus2.isPaused) {
                     throw new Exception("Printer is gepauzeerd. Gelieve deze eerst te activeren.");
-                } else if (printerStatus.isHeadOpen) {
+                } else if (printerStatus2.isHeadOpen) {
                     throw new Exception("Printer staat open. Gelieve deze eerst te sluiten.");
-                } else if (printerStatus.isPaperOut) {
+                } else if (printerStatus2.isPaperOut) {
                     throw new Exception("Gelieve eerst de etiketten aan te vullen.");
                 } else {
                     throw new Exception("Kon de printerstatus niet ophalen. Gelieve opnieuw te proberen. " +
@@ -254,7 +254,7 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
      * @throws Exception
      */
     private void setLabelLength(ZebraImageAndroid zebraimage) throws Exception {
-        ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer);
+        ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer2);
 
         if (zebraPrinterLinkOs != null) {
             String currentLabelLength = zebraPrinterLinkOs.getSettingValue("zpl.label_length");
@@ -269,12 +269,12 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
 	
 	private void initializePrinter() throws ConnectionException, ZebraPrinterLanguageUnknownException {
         Log.d(LOG_TAG, "Initializing printer...");
-        printer2 = ZebraPrinterFactory.getInstance(thePrinterConn);
-        String printerLanguage = SGD.GET("device.languages", thePrinterConn);
+        printer2 = ZebraPrinterFactory.getInstance(thePrinterConn2);
+        String printerLanguage = SGD.GET("device.languages", thePrinterConn2);
 
         if (!printerLanguage.contains("zpl")) {
 			// print diff
-            SGD.SET("device.languages", "hybrid_xml_zpl", thePrinterConn);
+            SGD.SET("device.languages", "hybrid_xml_zpl", thePrinterConn2);
             Log.d(LOG_TAG, "printer language set...");
         }
     }
@@ -299,7 +299,25 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
 
         return false;
     }
-    /*
+   
+
+    private void printImageTheOldWay(ZebraImageAndroid zebraimage) throws Exception {
+
+        Log.d(LOG_TAG, "Printing image...");
+
+        String cpcl = "! 0 200 200 ";
+        cpcl += zebraimage.getHeight();
+        cpcl += " 1\r\n";
+		// print diff
+        cpcl += "PW 750\r\nTONE 0\r\nSPEED 6\r\nSETFF 203 5\r\nON - FEED FEED\r\nAUTO - PACE\r\nJOURNAL\r\n";
+		//cpcl += "TONE 0\r\nJOURNAL\r\n";
+        cpcl += "PCX 150 0 !<wgkimage.pcx\r\n";
+        cpcl += "FORM\r\n";
+        cpcl += "PRINT\r\n";
+        thePrinterConn2.write(cpcl.getBytes());
+
+    }
+   /*
      * This will send data to be printed by the bluetooth printer
      */
     void sendData(final CallbackContext callbackContext, final String mac, final String msg) throws IOException {
