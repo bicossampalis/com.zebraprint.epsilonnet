@@ -45,15 +45,15 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
 		this.callbackContext2 = callbackContext;
 		if (action.equals("printImage")) {
             try {
-                JSONArray labels = args.getJSONArray(1);
+                String labels = args.getJSONArray(1);
                 String MACAddress = args.getString(0);
                 speed = args.getInt(2);
                 time = args.getInt(3);
                 number = args.getInt(4);
-                for (int i = 1; i < number; i++)
-                {
-                    labels.put(labels.get(0));
-                }
+                // for (int i = 1; i < number; i++)
+                // {
+                    // labels.put(labels.get(0));
+                // }
                 sendImage(labels, MACAddress);
             } catch (IOException e) {
                callbackContext.error(e.getMessage());
@@ -116,7 +116,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
       }      
     }
 
-	 private void sendImage(final JSONArray labels, final String MACAddress) throws IOException {
+	 private void sendImage(final String labels, final String MACAddress) throws IOException {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -125,7 +125,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
         }).start();
     }
 	
-	 private void printLabels(JSONArray labels, String MACAddress) {
+	 private void printLabels(String labels, String MACAddress) {
         try {
 
             boolean isConnected = openBluetoothConnection(MACAddress);
@@ -179,11 +179,11 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
         }
     }
 	
-	private void printLabel(JSONArray labels) throws Exception {
+	private void printLabel(String labels) throws Exception {
         ZebraPrinterLinkOs zebraPrinterLinkOs = ZebraPrinterFactory.createLinkOsPrinter(printer2);
 
-        for (int i = labels.length() - 1; i >= 0; i--) {
-            String base64Image = labels.get(i).toString();
+       
+            String base64Image = labels;
             byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
 
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -194,7 +194,7 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
 
 
             //Lengte van het label eerst instellen om te kleine of te grote afdruk te voorkomen
-            if (zebraPrinterLinkOs != null && i == labels.length() - 1) {
+            if (zebraPrinterLinkOs != null) {
                 setLabelLength(zebraimage);
             }
 
@@ -212,7 +212,7 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
             {
                 Thread.sleep(1000 * time);
             }
-        }
+        
 
     }
 	
