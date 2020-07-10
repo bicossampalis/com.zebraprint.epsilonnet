@@ -45,7 +45,7 @@ public class ZebraBluetoothPrinter extends CordovaPlugin {
 		this.callbackContext2 = callbackContext;
 		if (action.equals("printImage")) {
             try {
-                String labels = args.getJSONArray(1);
+                String labels = args.getString(1);
                 String MACAddress = args.getString(0);
                 speed = args.getInt(2);
                 time = args.getInt(3);
@@ -208,10 +208,9 @@ int labelSleep = (Integer.valueOf(labelHeight / 400) * 1000) * speed;
             }
 
             Thread.sleep(labelSleep);
-            if (i > 0)
-            {
+          
                 Thread.sleep(1000 * time);
-            }
+           
         
 
     }
