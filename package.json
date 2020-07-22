@@ -1,9 +1,9 @@
 {
-  "name": "com-zebraprint-epsilonnet",
-  "version": "3.52",
+  "name": "com.zebraprint.epsilonnet",
+  "version": "3.53",
   "description": "Zebra printer",
   "cordova": {
-    "id": "com-zebraprint-epsilonnet",
+    "id": "com.zebraprint.epsilonnet",
     "platforms": [
       "android",
       "ios"
