@@ -1,0 +1,31 @@
+{
+  "name": "com-zebraprint-epsilonnet",
+  "version": "3.52",
+  "description": "Zebra printer",
+  "cordova": {
+    "id": "com-zebraprint-epsilonnet",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bicossampalis/com.zebraprint.epsilonnet.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": {
+    "name": ""
+  },
+  "license": "MIT"
+}
