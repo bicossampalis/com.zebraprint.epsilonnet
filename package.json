@@ -1,7 +1,7 @@
 {
   "name": "com.zebraprint.epsilonnet",
-  "version": "3.53",
-  "description": "Zebra printer",
+  "version": "3.54.0",
+  "description": "A Cordova/Phonegap driver for Zebra bluetooth printers",
   "cordova": {
     "id": "com.zebraprint.epsilonnet",
     "platforms": [
@@ -9,9 +9,15 @@
       "ios"
     ]
   },
+  "dependencies": {
+    "flyacts-plugin-barcodescanner": "undefined6.0.3"
+  },
+  "devDependencies": {
+    "flyacts-plugin-barcodescanner": "undefined6.0.3"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bicossampalis/com.zebraprint.epsilonnet.git"
+    "url": "git+https://github.com/bicossampalis/com.zebraprint.epsilonnet.git"
   },
   "keywords": [
     "ecosystem:cordova",
@@ -24,8 +30,10 @@
       "version": ">=3.0.0"
     }
   ],
-  "author": {
-    "name": ""
+  "author": "",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/bicossampalis/com.zebraprint.epsilonnet/issues"
   },
-  "license": "MIT"
+  "homepage": "https://github.com/bicossampalis/com.zebraprint.epsilonnet#readme"
 }
